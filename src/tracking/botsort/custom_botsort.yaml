@@ -1,0 +1,30 @@
+# ==========================================
+# CONFIGURACIÓN EXTREMA PARA OCLUSIONES LARGAS
+# ==========================================
+tracker_type: botsort
+
+# --- MEMORIA LARGA PLAZO ---
+# 600 frames = ¡20 SEGUNDOS de memoria! (Asumiendo 30fps)
+track_buffer: 600         
+
+# --- FILTRO DE NACIMIENTO (Más estricto) ---
+# Subimos esto a 0.6. Así, si algo sale de la planta, el tracker 
+# intentará por todos los medios conectarlo con un ID viejo antes de 
+# atreverse a crear uno nuevo.
+new_track_thresh: 0.6     
+
+# --- UMBRALES DE MANTENIMIENTO (Más relajados) ---
+track_high_thresh: 0.2
+track_low_thresh: 0.1
+
+# --- TOLERANCIA DE MATCH (Ultra permisivo) ---
+# 0.99 significa "incluso si sale por un lugar ligeramente diferente 
+# o deformado, asume que es el pez que estaba oculto".
+match_thresh: 0.99
+
+# --- AJUSTES INTERNOS ---
+gmc_method: sparseOptFlow
+proximity_thresh: 0.6     # Tolerancia de proximidad aumentada
+appearance_thresh: 0.3    # Tolera cambios de luz al salir de las sombras
+with_reid: False
+fuse_score: True
