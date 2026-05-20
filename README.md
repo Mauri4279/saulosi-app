@@ -267,8 +267,8 @@ Las siguientes etapas del proyecto contemplan:
 ## Clonar el repositorio
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
-cd SAULOSI_APP
+git clone <https://github.com/Mauri4279/saulosi-app>
+cd saulosi-app
 ```
 
 ## Crear entorno virtual
