@@ -20,7 +20,7 @@ from src.feature_extraction.export_pipeline import (
 )
 
 VIDEO_NAME = (
-    "vid_029_part_01_acuario_domestico_cinco_peces.mp4"
+    "vid_014_part_01_acuario_domestico_peces_en_el_cristal.mp4"
 )
 
 

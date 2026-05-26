@@ -56,21 +56,33 @@ def exportar_resultados(
         JSON_METRICS_DIR /
         f"{nombre_base}_metricas.json"
     )
+    
+    try:
+        exportar_csv(
+            metricas,
+            csv_output
+            )
+        print(f"CSV exportado: {csv_output}")
+    except Exception as e:
+        print(f"Error exportando CSV: {e}")
 
-    exportar_csv(
-        metricas,
-        csv_output
-    )
+#    try:
+#        exportar_parquet(
+#            metricas,
+#            parquet_output
+#        )
+#        print(f"PARQUET exportado: {parquet_output}")
+#    except Exception as e:
+#        print(f"Error exportando PARQUET: {e}")
 
-    exportar_parquet(
-        metricas,
-        parquet_output
-    )
-
-    exportar_json(
-        metricas,
-        json_output
-    )
+    try:
+        exportar_json(
+            metricas,
+            json_output
+        )
+        print(f"JSON exportado: {json_output}")
+    except Exception as e:
+        print(f"Error exportando JSON: {e}")
 
     posiciones = [
 
@@ -84,23 +96,12 @@ def exportar_resultados(
         f"{nombre_base}_heatmap.png"
     )
 
-    generar_heatmap(
-        posiciones,
-        heatmap_output
-    )
+    try:
+        generar_heatmap(
+            posiciones,
+            heatmap_output
+        )
+        print(f"Heatmap exportado: {heatmap_output}")
+    except Exception as e:
+        print(f"Error generando heatmap: {e}")
 
-    print(
-        f"CSV exportado: {csv_output}"
-    )
-
-    print(
-        f"PARQUET exportado: {parquet_output}"
-    )
-
-    print(
-        f"JSON exportado: {json_output}"
-    )
-
-    print(
-        f"Heatmap exportado: {heatmap_output}"
-    )
