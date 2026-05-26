@@ -79,14 +79,16 @@ def ejecutar_extraccion_features(
                 historial_velocidad[track_id][-1],
                 fps
             )
-
-        inmovil = detectar_inmovilidad(
-            historial
-        )
-
+            
         movimiento_brusco = detectar_cambio_brusco(
             aceleracion,
             ACELERACION_BRUSCA
+        )
+
+        inmovil = detectar_inmovilidad(
+            historial,
+            velocidad,
+            movimiento_brusco
         )
 
         proximidad = detectar_proximidad(

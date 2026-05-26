@@ -15,6 +15,23 @@ def calcular_entropia(velocidades):
     return entropy(hist)
 
 
+def normalizar(
+    valor,
+    minimo,
+    maximo
+):
+
+    if maximo - minimo == 0:
+        return 0
+
+    valor = max(min(valor, maximo), minimo)
+
+    return (
+        (valor - minimo)
+        / (maximo - minimo)
+    )
+
+
 def calcular_score_comportamiento(
     velocidad,
     aceleracion,
@@ -24,19 +41,51 @@ def calcular_score_comportamiento(
     entropia
 ):
 
+    velocidad_norm = normalizar(
+        velocidad,
+        0,
+        150
+    )
+
+    aceleracion_norm = normalizar(
+        abs(aceleracion),
+        0,
+        3000
+    )
+
+    curvatura_norm = normalizar(
+        curvatura,
+        0,
+        180
+    )
+
+    entropia_norm = normalizar(
+        entropia,
+        0,
+        3
+    )
+
+    proximidad_norm = normalizar(
+        len(proximidad),
+        0,
+        5
+    )
+
     score = 0
 
-    score += velocidad * 0.2
+    score += velocidad_norm * 30
 
-    score += abs(aceleracion) * 0.15
+    score += aceleracion_norm * 25
 
-    score += curvatura * 0.15
+    score += curvatura_norm * 15
 
-    score += entropia * 10
+    score += entropia_norm * 20
 
-    score += len(proximidad) * 5
+    score += proximidad_norm * 10
 
     if inmovil:
-        score -= 20
+        score -= 15
+
+    score = max(score, 0)
 
     return round(score, 2)
