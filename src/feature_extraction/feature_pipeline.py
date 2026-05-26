@@ -1,4 +1,5 @@
 from collections import defaultdict
+from collections import deque
 
 from src.feature_extraction.movement_metrics import (
     calcular_velocidad,
@@ -27,6 +28,14 @@ from src.feature_extraction.thresholds import (
     SUPERFICIE_Y
 )
 
+from src.validation.filters.velocity_sanity_filter import (
+    validar_valores_cinematicos
+)
+
+from src.validation.filters.temporal_continuity_filter import (
+    validar_continuidad
+)
+
 
 def ejecutar_extraccion_features(
     tracking_data,
@@ -35,9 +44,15 @@ def ejecutar_extraccion_features(
 
     historial_posiciones = defaultdict(list)
 
+    historial_suavizado = defaultdict(
+        lambda: deque(maxlen=5)
+    )
+
     historial_velocidad = defaultdict(list)
 
     tiempo_superficie = defaultdict(int)
+
+    posiciones_actuales = {}
 
     metricas = []
 
@@ -50,17 +65,63 @@ def ejecutar_extraccion_features(
         cx = data["cx"]
         cy = data["cy"]
 
-        historial_posiciones[track_id].append(
+        # =========================
+        # SMOOTHING DE CENTROIDES
+        # =========================
+
+        historial_suavizado[track_id].append(
             (cx, cy)
         )
 
+        cx_smooth = int(sum(
+            p[0]
+            for p in historial_suavizado[track_id]
+        ) / len(historial_suavizado[track_id]))
+
+        cy_smooth = int(sum(
+            p[1]
+            for p in historial_suavizado[track_id]
+        ) / len(historial_suavizado[track_id]))
+
+        historial_posiciones[track_id].append(
+            (cx_smooth, cy_smooth)
+        )
+
+        posiciones_actuales[track_id] = (
+            cx_smooth,
+            cy_smooth
+        )
+
         historial = historial_posiciones[track_id]
+
+        # =========================
+        # VARIABLES INICIALES
+        # =========================
+
+        continuidad = {
+            "continuidad_valida": True,
+            "distancia_frame": 0
+        }
+
+        validacion_cinematica = {
+            "velocidad_valida": True,
+            "aceleracion_valida": True
+        }
 
         velocidad = 0
         aceleracion = 0
         curvatura = 0
 
+        # =========================
+        # VELOCIDAD
+        # =========================
+
         if len(historial) >= 2:
+
+            continuidad = validar_continuidad(
+                historial[-2],
+                historial[-1]
+            )
 
             velocidad = calcular_velocidad(
                 historial[-2],
@@ -72,6 +133,10 @@ def ejecutar_extraccion_features(
                 velocidad
             )
 
+        # =========================
+        # ACELERACION
+        # =========================
+
         if len(historial_velocidad[track_id]) >= 2:
 
             aceleracion = calcular_aceleracion(
@@ -79,11 +144,26 @@ def ejecutar_extraccion_features(
                 historial_velocidad[track_id][-1],
                 fps
             )
-            
+
+            validacion_cinematica = (
+                validar_valores_cinematicos(
+                    velocidad,
+                    aceleracion
+                )
+            )
+
+        # =========================
+        # MOVIMIENTO BRUSCO
+        # =========================
+
         movimiento_brusco = detectar_cambio_brusco(
             aceleracion,
             ACELERACION_BRUSCA
         )
+
+        # =========================
+        # INMOVILIDAD
+        # =========================
 
         inmovil = detectar_inmovilidad(
             historial,
@@ -91,27 +171,45 @@ def ejecutar_extraccion_features(
             movimiento_brusco
         )
 
+        # =========================
+        # PROXIMIDAD SOCIAL
+        # =========================
+
         proximidad = detectar_proximidad(
             track_id,
-            {
-                track_id: (cx, cy)
-            },
+            posiciones_actuales,
             DISTANCIA_SOCIAL
         )
+
+        # =========================
+        # CURVATURA
+        # =========================
 
         curvatura = calcular_curvatura(
             historial
         )
 
+        # =========================
+        # TIEMPO EN SUPERFICIE
+        # =========================
+
         if calcular_tiempo_superficie(
-            cy,
+            cy_smooth,
             SUPERFICIE_Y
         ):
             tiempo_superficie[track_id] += 1
 
+        # =========================
+        # ENTROPIA
+        # =========================
+
         entropia = calcular_entropia(
             historial_velocidad[track_id]
         )
+
+        # =========================
+        # SCORE GENERAL
+        # =========================
 
         score = calcular_score_comportamiento(
             velocidad,
@@ -121,6 +219,10 @@ def ejecutar_extraccion_features(
             curvatura,
             entropia
         )
+
+        # =========================
+        # EXPORT METRICS
+        # =========================
 
         metricas.append({
 
@@ -143,7 +245,31 @@ def ejecutar_extraccion_features(
             "score": score,
 
             "tiempo_superficie":
-                tiempo_superficie[track_id]
+                tiempo_superficie[track_id],
+
+            "velocidad_valida":
+                validacion_cinematica[
+                    "velocidad_valida"
+                ],
+
+            "aceleracion_valida":
+                validacion_cinematica[
+                    "aceleracion_valida"
+                ],
+
+            "continuidad_valida":
+                continuidad[
+                    "continuidad_valida"
+                ],
+
+            "distancia_frame":
+                continuidad[
+                    "distancia_frame"
+                ],
+
+            "peces_cercanos":
+                len(proximidad)
+
         })
 
     return metricas
