@@ -19,6 +19,10 @@ from src.feature_extraction.export_pipeline import (
     exportar_resultados
 )
 
+from src.validation.validation_pipeline import (
+    ejecutar_validacion
+)
+
 VIDEO_NAME = (
     "vid_014_part_01_acuario_domestico_peces_en_el_cristal.mp4"
 )
@@ -60,6 +64,11 @@ def main():
     exportar_resultados(
         metricas,
         tracking_data,
+        nombre_base
+        )
+    
+    ejecutar_validacion(
+        metricas,
         nombre_base
         )
 
