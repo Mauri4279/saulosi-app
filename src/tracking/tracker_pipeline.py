@@ -6,7 +6,6 @@ from collections import defaultdict
 from src.visualization.drawing import dibujar_texto_borde
 from src.utils.paths import TRACKER_CONF
 
-
 TARGET_W = 640
 TARGET_H = 360
 
@@ -15,6 +14,9 @@ OPACIDAD = 0.6
 
 
 def ejecutar_tracking(video_path, output_video, model):
+
+    tracking_data = []
+    frame_number = 0
 
     track_history = defaultdict(list)
     peces_unicos_historico = set()
@@ -36,6 +38,8 @@ def ejecutar_tracking(video_path, output_video, model):
     )
 
     while True:
+
+        frame_number += 1
 
         ret, frame = cap.read()
 
@@ -76,6 +80,14 @@ def ejecutar_tracking(video_path, output_video, model):
                 cy = int((y1 + y2) / 2)
 
                 track_history[track_id].append((cx, cy))
+
+                tracking_data.append({
+                    "frame": frame_number,
+                    "track_id": track_id,
+                    "cx": cx,
+                    "cy": cy,
+                    "conf": float(conf)
+                    })
 
                 if len(track_history[track_id]) > 90:
                     track_history[track_id].pop(0)
@@ -158,7 +170,7 @@ def ejecutar_tracking(video_path, output_video, model):
     cap.release()
     out_video.release()
     cv2.destroyAllWindows()
-
+    
     print("\n===============================")
     print("✔ ANÁLISIS FINALIZADO")
     print(
@@ -167,3 +179,5 @@ def ejecutar_tracking(video_path, output_video, model):
     )
     print(f"Video exportado: {output_video}")
     print("===============================\n")
+
+    return tracking_data

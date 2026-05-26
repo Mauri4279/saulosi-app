@@ -1,14 +1,27 @@
 from pathlib import Path
 
 from src.detection.detector import cargar_modelo
-from src.tracking.tracker_pipeline import ejecutar_tracking
+
+from src.tracking.tracker_pipeline import (
+    ejecutar_tracking
+)
+
+from src.feature_extraction.feature_pipeline import (
+    ejecutar_extraccion_features
+)
 
 from src.utils.paths import (
     RAW_VIDEOS_DIR,
     PROCESSED_DIR
 )
 
-VIDEO_NAME = "vid_001_part_02_acuario_domestico_mucho_movimiento.mp4"
+from src.feature_extraction.export_pipeline import (
+    exportar_resultados
+)
+
+VIDEO_NAME = (
+    "vid_029_part_01_acuario_domestico_cinco_peces.mp4"
+)
 
 
 def main():
@@ -18,7 +31,11 @@ def main():
     nombre_base = Path(VIDEO_NAME).stem
 
     output_dir = PROCESSED_DIR / nombre_base
-    output_dir.mkdir(parents=True, exist_ok=True)
+
+    output_dir.mkdir(
+        parents=True,
+        exist_ok=True
+    )
 
     output_video = (
         output_dir /
@@ -27,10 +44,28 @@ def main():
 
     model = cargar_modelo()
 
-    ejecutar_tracking(
+    tracking_data = ejecutar_tracking(
         video_path=video_path,
         output_video=output_video,
         model=model
+    )
+
+    fps = 30
+
+    metricas = ejecutar_extraccion_features(
+        tracking_data,
+        fps
+    )
+
+    exportar_resultados(
+        metricas,
+        tracking_data,
+        nombre_base
+        )
+
+    print(
+        f"Metricas generadas: "
+        f"{len(metricas)}"
     )
 
 

@@ -12,6 +12,22 @@ RAW_VIDEOS_DIR = DATA_DIR / "raw" / "videos"
 PROCESSED_DIR = DATA_DIR / "processed"
 
 # =========================
+# OUTPUTS
+# =========================
+
+OUTPUTS_DIR = ROOT_DIR / "outputs"
+
+METRICS_DIR = OUTPUTS_DIR / "metrics"
+
+CSV_METRICS_DIR = METRICS_DIR / "csv"
+
+PARQUET_METRICS_DIR = METRICS_DIR / "parquet"
+
+JSON_METRICS_DIR = METRICS_DIR / "json"
+
+HEATMAPS_DIR = OUTPUTS_DIR / "heatmaps"
+
+# =========================
 # MODELOS
 # =========================
 MODELS_DIR = ROOT_DIR / "models"
