@@ -18,6 +18,16 @@ def generar_estadisticas(metricas):
         for m in metricas
     ]
 
+    velocidades_norm = [
+        m["velocidad_normalizada"]
+        for m in metricas
+    ]
+
+    aceleraciones_norm = [
+        m["aceleracion_normalizada"]
+        for m in metricas
+    ]
+
     stats = {
 
         "score_promedio":
@@ -31,6 +41,12 @@ def generar_estadisticas(metricas):
 
         "velocidad_promedio":
             round(np.mean(velocidades), 2),
+
+        "velocidad_normalizada_promedio":
+            round(np.mean(velocidades_norm), 4),
+
+        "aceleracion_normalizada_promedio":
+            round(np.mean(aceleraciones_norm), 4),
 
         "frames_analizados":
             len(metricas)

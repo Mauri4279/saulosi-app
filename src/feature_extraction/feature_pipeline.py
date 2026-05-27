@@ -36,6 +36,15 @@ from src.validation.filters.temporal_continuity_filter import (
     validar_continuidad
 )
 
+from src.normalization.kinematic_normalizer import (
+    normalizar_velocidad,
+    normalizar_aceleracion
+)
+
+from src.normalization.video_metadata import (
+    FRAME_DIAGONAL
+)
+
 
 def ejecutar_extraccion_features(
     tracking_data,
@@ -112,6 +121,9 @@ def ejecutar_extraccion_features(
         aceleracion = 0
         curvatura = 0
 
+        velocidad_normalizada = 0
+        aceleracion_normalizada = 0
+
         # =========================
         # VELOCIDAD
         # =========================
@@ -133,6 +145,13 @@ def ejecutar_extraccion_features(
                 velocidad
             )
 
+            velocidad_normalizada = (
+                normalizar_velocidad(
+                    velocidad,
+                    FRAME_DIAGONAL
+                )
+            )
+
         # =========================
         # ACELERACION
         # =========================
@@ -143,6 +162,13 @@ def ejecutar_extraccion_features(
                 historial_velocidad[track_id][-2],
                 historial_velocidad[track_id][-1],
                 fps
+            )
+
+            aceleracion_normalizada = (
+                normalizar_aceleracion(
+                    aceleracion,
+                    fps
+                )
             )
 
             validacion_cinematica = (
@@ -234,13 +260,19 @@ def ejecutar_extraccion_features(
 
             "aceleracion": aceleracion,
 
+            "velocidad_normalizada":
+                round(velocidad_normalizada, 6),
+
+            "aceleracion_normalizada":
+                round(aceleracion_normalizada, 6),
+
             "inmovil": inmovil,
 
             "movimiento_brusco": movimiento_brusco,
 
-            "curvatura": curvatura,
+            "curvatura": round(curvatura, 4),
 
-            "entropia": entropia,
+            "entropia": round(entropia, 4),
 
             "score": score,
 

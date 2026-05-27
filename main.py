@@ -24,7 +24,7 @@ from src.validation.validation_pipeline import (
 )
 
 VIDEO_NAME = (
-    "vid_014_part_01_acuario_domestico_peces_en_el_cristal.mp4"
+    "vid_022_part_01_acuario_domestico_agresion_distancia_varias_posiciones.mp4"
 )
 
 
