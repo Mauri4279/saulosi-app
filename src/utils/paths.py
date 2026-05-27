@@ -28,6 +28,20 @@ JSON_METRICS_DIR = METRICS_DIR / "json"
 HEATMAPS_DIR = OUTPUTS_DIR / "heatmaps"
 
 # =========================
+# BEHAVIOR PROFILES
+# =========================
+
+PROFILES_DIR = OUTPUTS_DIR / "profiles"
+
+PROFILE_JSON_DIR = (
+    PROFILES_DIR / "json"
+)
+
+PROFILE_CSV_DIR = (
+    PROFILES_DIR / "csv"
+)
+
+# =========================
 # MODELOS
 # =========================
 MODELS_DIR = ROOT_DIR / "models"
