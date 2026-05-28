@@ -86,3 +86,19 @@ QUALITY_CSV_DIR = (
 QUALITY_JSON_DIR = (
     QUALITY_DIR / "json"
 )
+
+# =========================
+# BEHAVIOR
+# =========================
+
+BEHAVIOR_DIR = (
+    OUTPUTS_DIR / "behavior"
+)
+
+BEHAVIOR_CSV_DIR = (
+    BEHAVIOR_DIR / "csv"
+)
+
+BEHAVIOR_JSON_DIR = (
+    BEHAVIOR_DIR / "json"
+)

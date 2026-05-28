@@ -31,6 +31,15 @@ from src.quality.quality_exporter import (
     exportar_quality_json
 )
 
+from src.behavior.behavior_pipeline import (
+    generar_behavior_profiles
+)
+
+from src.behavior.behavior_exporter import (
+    exportar_behavior_csv,
+    exportar_behavior_json
+)
+
 from src.utils.paths import (
     CSV_METRICS_DIR,
     PARQUET_METRICS_DIR,
@@ -41,7 +50,9 @@ from src.utils.paths import (
     TRACKING_CSV_DIR,
     TRACKING_JSON_DIR,
     QUALITY_CSV_DIR,
-    QUALITY_JSON_DIR
+    QUALITY_JSON_DIR,
+    BEHAVIOR_CSV_DIR,
+    BEHAVIOR_JSON_DIR
 )
 
 
@@ -81,6 +92,16 @@ def exportar_resultados(
     )
 
     PROFILE_CSV_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    BEHAVIOR_CSV_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    BEHAVIOR_JSON_DIR.mkdir(
         parents=True,
         exist_ok=True
     )
@@ -278,6 +299,36 @@ def exportar_resultados(
         metricas
     )
 
+# =========================
+# GENERAR QUALITY
+# =========================
+
+    quality_metrics = (
+    generar_quality_metrics(
+        tracking_data
+    )
+    )
+
+# =========================
+# GENERAR BEHAVIOR
+# =========================
+
+    print(
+        "\nGenerando perfiles comportamentales..."
+    )
+
+    behavior_profiles = (
+        generar_behavior_profiles(
+            perfiles,
+            quality_metrics
+        )
+    )
+
+    print(
+        f"Perfiles comportamentales generados: "
+        f"{len(behavior_profiles)}"
+    )
+
     # =========================
     # OUTPUTS PERFILES
     # =========================
@@ -411,5 +462,57 @@ def exportar_resultados(
 
         print(
             f"Error exportando Quality JSON: "
+            f"{e}"
+        )
+
+    # =========================
+    # BEHAVIOR EXPORT
+    # =========================
+
+    behavior_csv_output = (
+        BEHAVIOR_CSV_DIR /
+        f"{nombre_base}_behavior.csv"
+    )
+
+    behavior_json_output = (
+        BEHAVIOR_JSON_DIR /
+        f"{nombre_base}_behavior.json"
+    )
+
+    try:
+
+        exportar_behavior_csv(
+            behavior_profiles,
+            behavior_csv_output
+        )
+
+        print(
+            f"Behavior CSV exportado: "
+            f"{behavior_csv_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error exportando Behavior CSV: "
+            f"{e}"
+        )
+
+    try:
+
+        exportar_behavior_json(
+            behavior_profiles,
+            behavior_json_output
+        )
+
+        print(
+            f"Behavior JSON exportado: "
+            f"{behavior_json_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error exportando Behavior JSON: "
             f"{e}"
         )
