@@ -102,3 +102,19 @@ BEHAVIOR_CSV_DIR = (
 BEHAVIOR_JSON_DIR = (
     BEHAVIOR_DIR / "json"
 )
+
+# =========================
+# BEHAVIOR STATISTICS
+# =========================
+
+BEHAVIOR_STATS_DIR = (
+    OUTPUTS_DIR / "behavior_stats"
+)
+
+BEHAVIOR_STATS_CSV_DIR = (
+    BEHAVIOR_STATS_DIR / "csv"
+)
+
+BEHAVIOR_STATS_JSON_DIR = (
+    BEHAVIOR_STATS_DIR / "json"
+)

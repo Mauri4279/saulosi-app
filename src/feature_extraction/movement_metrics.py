@@ -52,3 +52,54 @@ def calcular_curvatura(historial):
     angulo = np.arccos(cos_theta)
 
     return np.degrees(angulo)
+
+def calcular_desplazamiento_neto(historial):
+
+    if len(historial) < 2:
+        return 0
+
+    return calcular_distancia(
+        historial[0],
+        historial[-1]
+    )
+
+
+def calcular_distancia_total(historial):
+
+    if len(historial) < 2:
+        return 0
+
+    distancia_total = 0
+
+    for i in range(1, len(historial)):
+
+        distancia_total += calcular_distancia(
+            historial[i - 1],
+            historial[i]
+        )
+
+    return distancia_total
+
+
+def calcular_ratio_exploracion(historial):
+
+    distancia_total = (
+        calcular_distancia_total(
+            historial
+        )
+    )
+
+    if distancia_total == 0:
+        return 0
+
+    desplazamiento_neto = (
+        calcular_desplazamiento_neto(
+            historial
+        )
+    )
+
+    return (
+        desplazamiento_neto
+        /
+        distancia_total
+    )
