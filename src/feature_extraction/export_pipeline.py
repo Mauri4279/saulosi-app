@@ -17,13 +17,31 @@ from src.profiling.profile_exporter import (
     exportar_perfiles_json
 )
 
+from src.tracking.tracking_exporter import (
+    exportar_tracking_csv,
+    exportar_tracking_json
+)
+
+from src.quality.track_quality import (
+    generar_quality_metrics
+)
+
+from src.quality.quality_exporter import (
+    exportar_quality_csv,
+    exportar_quality_json
+)
+
 from src.utils.paths import (
     CSV_METRICS_DIR,
     PARQUET_METRICS_DIR,
     JSON_METRICS_DIR,
     HEATMAPS_DIR,
     PROFILE_JSON_DIR,
-    PROFILE_CSV_DIR
+    PROFILE_CSV_DIR,
+    TRACKING_CSV_DIR,
+    TRACKING_JSON_DIR,
+    QUALITY_CSV_DIR,
+    QUALITY_JSON_DIR
 )
 
 
@@ -191,6 +209,68 @@ def exportar_resultados(
         )
 
     # =========================
+    # TRACKING EXPORT
+    # =========================
+
+    TRACKING_CSV_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    TRACKING_JSON_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    tracking_csv_output = (
+        TRACKING_CSV_DIR /
+        f"{nombre_base}_tracking.csv"
+    )
+
+    tracking_json_output = (
+        TRACKING_JSON_DIR /
+        f"{nombre_base}_tracking.json"
+    )
+
+    try:
+
+        exportar_tracking_csv(
+            tracking_data,
+            tracking_csv_output
+        )
+
+        print(
+            f"Tracking CSV exportado: "
+            f"{tracking_csv_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error exportando tracking CSV: "
+            f"{e}"
+        )
+
+    try:
+
+        exportar_tracking_json(
+            tracking_data,
+            tracking_json_output
+        )
+
+        print(
+            f"Tracking JSON exportado: "
+            f"{tracking_json_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error exportando tracking JSON: "
+            f"{e}"
+        )
+
+    # =========================
     # GENERAR PERFILES
     # =========================
 
@@ -255,5 +335,81 @@ def exportar_resultados(
 
         print(
             f"Error exportando profiles JSON: "
+            f"{e}"
+        )
+
+    # =========================
+    # QUALITY / TRACK RELIABILITY
+    # =========================
+
+    QUALITY_CSV_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    QUALITY_JSON_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    quality_metrics = (
+        generar_quality_metrics(
+            tracking_data
+        )
+    )
+
+    quality_csv_output = (
+        QUALITY_CSV_DIR /
+        f"{nombre_base}_quality.csv"
+    )
+
+    quality_json_output = (
+        QUALITY_JSON_DIR /
+        f"{nombre_base}_quality.json"
+    )
+
+    # =========================
+    # EXPORT QUALITY CSV
+    # =========================
+
+    try:
+
+        exportar_quality_csv(
+            quality_metrics,
+            quality_csv_output
+        )
+
+        print(
+            f"Quality CSV exportado: "
+            f"{quality_csv_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error exportando Quality CSV: "
+            f"{e}"
+        )
+
+    # =========================
+    # EXPORT QUALITY JSON
+    # =========================
+
+    try:
+
+        exportar_quality_json(
+            quality_metrics,
+            quality_json_output
+        )
+
+        print(
+            f"Quality JSON exportado: "
+            f"{quality_json_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error exportando Quality JSON: "
             f"{e}"
         )

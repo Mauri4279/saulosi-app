@@ -56,3 +56,33 @@ MODEL_PATH = DETECTION_MODELS_DIR / "trained" / "best.pt"
 TRACKING_DIR = ROOT_DIR / "src" / "tracking"
 
 TRACKER_CONF = TRACKING_DIR / "botsort" / "custom_botsort.yaml"
+
+# =========================
+# TRACKING EXPORTS
+# =========================
+
+TRACKING_DIR = OUTPUTS_DIR / "tracking"
+
+TRACKING_CSV_DIR = (
+    TRACKING_DIR / "csv"
+)
+
+TRACKING_JSON_DIR = (
+    TRACKING_DIR / "json"
+)
+
+# =========================
+# QUALITY
+# =========================
+
+QUALITY_DIR = (
+    OUTPUTS_DIR / "quality"
+)
+
+QUALITY_CSV_DIR = (
+    QUALITY_DIR / "csv"
+)
+
+QUALITY_JSON_DIR = (
+    QUALITY_DIR / "json"
+)
