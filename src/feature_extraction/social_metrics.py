@@ -1,5 +1,7 @@
 import math
 
+from collections import defaultdict
+
 
 def distancia_entre_peces(p1, p2):
 
@@ -37,3 +39,17 @@ def detectar_proximidad(
             })
 
     return relaciones
+
+def actualizar_interacciones_sociales(
+    track_id,
+    proximidad,
+    matriz_social
+):
+
+    for relacion in proximidad:
+
+        otro_id = relacion["otro_pez"]
+
+        matriz_social[track_id][otro_id] += 1
+
+    return matriz_social

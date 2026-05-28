@@ -45,6 +45,11 @@ from src.normalization.video_metadata import (
     FRAME_DIAGONAL
 )
 
+from src.feature_extraction.social_metrics import (
+    detectar_proximidad,
+    actualizar_interacciones_sociales
+)
+
 
 def ejecutar_extraccion_features(
     tracking_data,
@@ -62,6 +67,10 @@ def ejecutar_extraccion_features(
     tiempo_superficie = defaultdict(int)
 
     posiciones_actuales = {}
+
+    matriz_social = defaultdict(
+        lambda: defaultdict(int)
+    )
 
     metricas = []
 
@@ -207,6 +216,14 @@ def ejecutar_extraccion_features(
             DISTANCIA_SOCIAL
         )
 
+        matriz_social = (
+            actualizar_interacciones_sociales(
+                track_id,
+                proximidad,
+                matriz_social
+            )
+        )
+
         # =========================
         # CURVATURA
         # =========================
@@ -304,4 +321,7 @@ def ejecutar_extraccion_features(
 
         })
 
-    return metricas
+    return {
+        "metricas": metricas,
+        "matriz_social": matriz_social
+    }

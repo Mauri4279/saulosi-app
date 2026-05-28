@@ -56,15 +56,26 @@ def main():
 
     fps = 30
 
-    metricas = ejecutar_extraccion_features(
-        tracking_data,
-        fps
+    resultado_features = (
+        ejecutar_extraccion_features(
+            tracking_data,
+            fps
+        )
     )
+
+    metricas = resultado_features[
+        "metricas"
+    ]
+
+    matriz_social = resultado_features[
+        "matriz_social"
+    ]
 
     exportar_resultados(
         metricas,
         tracking_data,
-        nombre_base
+        nombre_base,
+        matriz_social
         )
     
     ejecutar_validacion(

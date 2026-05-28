@@ -70,7 +70,8 @@ from src.utils.paths import (
 def exportar_resultados(
     metricas,
     tracking_data,
-    nombre_base
+    nombre_base,
+    matriz_social
 ):
 
     # =========================
@@ -308,7 +309,8 @@ def exportar_resultados(
 
     perfiles = generar_perfiles(
         metricas,
-        tracking_data
+        tracking_data,
+        matriz_social
     )
 
     # =========================

@@ -7,7 +7,7 @@ from src.feature_extraction.movement_metrics import (
 )
 
 
-def generar_perfiles(metricas, tracking_data):
+def generar_perfiles(metricas, tracking_data, matriz_social):
 
     perfiles_raw = defaultdict(
         lambda: {
@@ -133,6 +133,34 @@ def generar_perfiles(metricas, tracking_data):
             )
         )
 
+        relaciones = matriz_social.get(
+            track_id,
+            {}
+        )
+
+        companero_preferido = None
+
+        persistencia_social = 0
+
+        if len(relaciones) > 0:
+
+            companero_preferido = max(
+                relaciones,
+                key=relaciones.get
+            )
+
+            total_interacciones = sum(
+                relaciones.values()
+            )
+
+            persistencia_social = (
+                relaciones[
+                    companero_preferido
+                ]
+                /
+                total_interacciones
+            )
+
         perfil = {
 
             "track_id":
@@ -199,7 +227,17 @@ def generar_perfiles(metricas, tracking_data):
                 round(
                     np.mean(data["scores"]),
                     2
+                ),
+
+            "companero_preferido":
+                companero_preferido,
+
+            "persistencia_social":
+                round(
+                    persistencia_social,
+                    4
                 )
+
         }
 
         perfiles_finales.append(perfil)
