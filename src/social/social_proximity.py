@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 
-def detectar_persecuciones(
+def detectar_proximidades_sociales(
     tracking_data,
     distancia_umbral=120,
     frames_minimos=10
@@ -82,13 +82,13 @@ def detectar_persecuciones(
 
             eventos.append({
 
-                "agresor":
+                "pez_a":
                     clave[0],
 
-                "objetivo":
+                "pez_b":
                     clave[1],
 
-                "duracion_frames":
+                "frames_juntos":
                     duracion
             })
 

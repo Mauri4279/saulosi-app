@@ -134,3 +134,19 @@ SOCIAL_PROXIMITY_CSV_DIR = (
 SOCIAL_PROXIMITY_JSON_DIR = (
     SOCIAL_PROXIMITY_DIR / "json"
 )
+
+# =========================
+# CHASE EVENTS
+# =========================
+
+CHASE_DIR = (
+    OUTPUTS_DIR / "chase"
+)
+
+CHASE_CSV_DIR = (
+    CHASE_DIR / "csv"
+)
+
+CHASE_JSON_DIR = (
+    CHASE_DIR / "json"
+)

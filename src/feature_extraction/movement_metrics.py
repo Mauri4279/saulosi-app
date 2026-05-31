@@ -103,3 +103,18 @@ def calcular_ratio_exploracion(historial):
         /
         distancia_total
     )
+
+def calcular_vector_movimiento(
+    historial
+):
+
+    if len(historial) < 2:
+        return None
+
+    x1, y1 = historial[-2]
+    x2, y2 = historial[-1]
+
+    return (
+        x2 - x1,
+        y2 - y1
+    )

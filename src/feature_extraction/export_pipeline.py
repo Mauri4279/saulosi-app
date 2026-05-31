@@ -50,12 +50,21 @@ from src.behavior.behavior_statistics_exporter import (
 )
 
 from src.social.social_proximity import (
-    detectar_persecuciones
+    detectar_proximidades_sociales
 )
 
 from src.social.social_exporter import (
     exportar_social_csv,
     exportar_social_json
+)
+
+from src.social.chase_detection import (
+    detectar_persecuciones
+)
+
+from src.social.chase_exporter import (
+    exportar_persecuciones_csv,
+    exportar_persecuciones_json
 )
 
 from src.utils.paths import (
@@ -74,7 +83,9 @@ from src.utils.paths import (
     BEHAVIOR_STATS_CSV_DIR,
     BEHAVIOR_STATS_JSON_DIR,
     SOCIAL_PROXIMITY_CSV_DIR,
-    SOCIAL_PROXIMITY_JSON_DIR
+    SOCIAL_PROXIMITY_JSON_DIR,
+    CHASE_CSV_DIR,
+    CHASE_JSON_DIR
     )
 
 
@@ -138,6 +149,7 @@ def exportar_resultados(
         parents=True,
         exist_ok=True
     )
+
 
     # =========================
     # OUTPUTS METRICAS
@@ -351,6 +363,12 @@ def exportar_resultados(
     )
 
     social_proximity = (
+        detectar_proximidades_sociales(
+            tracking_data
+        )
+    )
+
+    persecuciones = (
         detectar_persecuciones(
             tracking_data
         )
@@ -679,3 +697,64 @@ def exportar_resultados(
         )
 
 
+    # =========================
+    # SOCIAL CHASE EXPORT
+    # =========================
+
+    CHASE_CSV_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    CHASE_JSON_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    chase_csv_output = (
+        CHASE_CSV_DIR /
+        f"{nombre_base}_chase.csv"
+    )
+
+    chase_json_output = (
+        CHASE_JSON_DIR /
+        f"{nombre_base}_chase.json"
+    )
+
+    try:
+
+        exportar_persecuciones_csv(
+            persecuciones,
+            chase_csv_output
+        )
+
+        print(
+            f"Chase CSV exportado: "
+            f"{chase_csv_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error Chase CSV: "
+            f"{e}"
+        )
+
+    try:
+
+        exportar_persecuciones_json(
+            persecuciones,
+            chase_json_output
+        )
+
+        print(
+            f"Chase JSON exportado: "
+            f"{chase_json_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error Chase JSON: "
+            f"{e}"
+        )
