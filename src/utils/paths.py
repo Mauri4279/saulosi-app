@@ -118,3 +118,19 @@ BEHAVIOR_STATS_CSV_DIR = (
 BEHAVIOR_STATS_JSON_DIR = (
     BEHAVIOR_STATS_DIR / "json"
 )
+
+# =========================
+# SOCIAL EVENTS
+# =========================
+
+SOCIAL_PROXIMITY_DIR = (
+    OUTPUTS_DIR / "social_proximity"
+)
+
+SOCIAL_PROXIMITY_CSV_DIR = (
+    SOCIAL_PROXIMITY_DIR / "csv"
+)
+
+SOCIAL_PROXIMITY_JSON_DIR = (
+    SOCIAL_PROXIMITY_DIR / "json"
+)

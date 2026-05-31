@@ -49,6 +49,15 @@ from src.behavior.behavior_statistics_exporter import (
     exportar_behavior_statistics_json
 )
 
+from src.social.social_proximity import (
+    detectar_persecuciones
+)
+
+from src.social.social_exporter import (
+    exportar_social_csv,
+    exportar_social_json
+)
+
 from src.utils.paths import (
     CSV_METRICS_DIR,
     PARQUET_METRICS_DIR,
@@ -63,8 +72,10 @@ from src.utils.paths import (
     BEHAVIOR_CSV_DIR,
     BEHAVIOR_JSON_DIR,
     BEHAVIOR_STATS_CSV_DIR,
-    BEHAVIOR_STATS_JSON_DIR
-)
+    BEHAVIOR_STATS_JSON_DIR,
+    SOCIAL_PROXIMITY_CSV_DIR,
+    SOCIAL_PROXIMITY_JSON_DIR
+    )
 
 
 def exportar_resultados(
@@ -114,6 +125,16 @@ def exportar_resultados(
     )
 
     BEHAVIOR_JSON_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    SOCIAL_PROXIMITY_CSV_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    SOCIAL_PROXIMITY_JSON_DIR.mkdir(
         parents=True,
         exist_ok=True
     )
@@ -326,6 +347,12 @@ def exportar_resultados(
     behavior_statistics = (
         generar_behavior_statistics(
             metricas
+        )
+    )
+
+    social_proximity = (
+        detectar_persecuciones(
+            tracking_data
         )
     )
 
@@ -598,3 +625,57 @@ def exportar_resultados(
             f"Error exportando Behavior Stats JSON: "
             f"{e}"
         )
+
+    # =========================
+    # SOCIAL PROXIMITY EXPORT
+    # =========================
+
+    social_csv_output = (
+        SOCIAL_PROXIMITY_CSV_DIR /
+        f"{nombre_base}_social.csv"
+    )
+
+    social_json_output = (
+        SOCIAL_PROXIMITY_JSON_DIR /
+        f"{nombre_base}_social.json"
+    )
+
+    try:
+
+        exportar_social_csv(
+            social_proximity,
+            social_csv_output
+        )
+
+        print(
+            f"Social proximity CSV exportado: "
+            f"{social_csv_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error Social proximity CSV: "
+            f"{e}"
+        )
+
+    try:
+
+        exportar_social_json(
+            social_proximity,
+            social_json_output
+        )
+
+        print(
+            f"Social proximity JSON exportado: "
+            f"{social_json_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error Social proximity json: "
+            f"{e}"
+        )
+
+
