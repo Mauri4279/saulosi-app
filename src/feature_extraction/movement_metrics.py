@@ -105,16 +105,31 @@ def calcular_ratio_exploracion(historial):
     )
 
 def calcular_vector_movimiento(
-    historial
+    historial,
+    ventana=5
 ):
 
-    if len(historial) < 2:
+    if len(historial) < ventana:
         return None
 
-    x1, y1 = historial[-2]
+    x1, y1 = historial[-ventana]
     x2, y2 = historial[-1]
 
     return (
         x2 - x1,
         y2 - y1
+    )
+
+
+
+def calcular_vector_hacia_objetivo(
+    origen,
+    destino
+):
+
+    return (
+
+        destino[0] - origen[0],
+        destino[1] - origen[1]
+
     )
