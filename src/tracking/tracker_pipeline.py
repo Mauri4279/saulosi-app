@@ -55,7 +55,7 @@ def ejecutar_tracking(video_path, output_video, model):
             frame,
             persist=True,
             tracker=str(TRACKER_CONF),
-            conf=0.15,
+            conf=0.40,
             iou=0.4,
             verbose=False
         )
@@ -179,5 +179,13 @@ def ejecutar_tracking(video_path, output_video, model):
     )
     print(f"Video exportado: {output_video}")
     print("===============================\n")
+
+    import time
+
+    print("\n--- SANITY CHECK ---")
+    print(f"Ruta del tracker: {TRACKER_CONF}")
+    print(f"Existe el archivo YAML?: {TRACKER_CONF.exists()}")
+    print(f"Hora de ejecución: {time.time()}")
+    print("--------------------\n")
 
     return tracking_data
