@@ -24,7 +24,7 @@ from src.validation.validation_pipeline import (
 )
 
 VIDEO_NAME = (
-    "vid_022_part_01_acuario_domestico_agresion_distancia_varias_posiciones.mp4"
+    "vid_022_part_03_acuario_domestico_agresion_distancia_varias_posiciones.mp4"
 )
 
 
@@ -75,7 +75,8 @@ def main():
         metricas,
         tracking_data,
         nombre_base,
-        matriz_social
+        matriz_social,
+        fps
         )
     
     ejecutar_validacion(

@@ -67,6 +67,15 @@ from src.social.chase_exporter import (
     exportar_persecuciones_json
 )
 
+from src.social.aggression_detection import (
+    detectar_agresiones
+)
+
+from src.social.aggression_exporter import (
+    exportar_agresiones_csv,
+    exportar_agresiones_json
+)
+
 from src.utils.paths import (
     CSV_METRICS_DIR,
     PARQUET_METRICS_DIR,
@@ -85,7 +94,9 @@ from src.utils.paths import (
     SOCIAL_PROXIMITY_CSV_DIR,
     SOCIAL_PROXIMITY_JSON_DIR,
     CHASE_CSV_DIR,
-    CHASE_JSON_DIR
+    CHASE_JSON_DIR,
+    AGGRESSION_CSV_DIR,
+    AGGRESSION_JSON_DIR
     )
 
 
@@ -93,7 +104,8 @@ def exportar_resultados(
     metricas,
     tracking_data,
     nombre_base,
-    matriz_social
+    matriz_social,
+    fps
 ):
 
     # =========================
@@ -347,7 +359,7 @@ def exportar_resultados(
     )
 
     # =========================
-    # GENERAR QUALITY
+    # GENERAR SOCIAL METRICS
     # =========================
 
     quality_metrics = (
@@ -371,6 +383,13 @@ def exportar_resultados(
     persecuciones = (
         detectar_persecuciones(
             tracking_data
+        )
+    )
+
+    agresiones = (
+        detectar_agresiones(
+            tracking_data,
+            fps=30
         )
     )
 
@@ -756,5 +775,67 @@ def exportar_resultados(
 
         print(
             f"Error Chase JSON: "
+            f"{e}"
+        )
+
+    # =========================
+    # SOCIAL AGGRESSION EXPORT
+    # =========================
+
+    AGGRESSION_CSV_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    AGGRESSION_JSON_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    aggression_csv_output = (
+        AGGRESSION_CSV_DIR /
+        f"{nombre_base}_aggression.csv"
+    )
+
+    aggression_json_output = (
+        AGGRESSION_JSON_DIR /
+        f"{nombre_base}_aggression.json"
+    )
+
+    try:
+
+        exportar_agresiones_csv(
+            agresiones,
+            aggression_csv_output
+        )
+
+        print(
+            f"Aggression CSV exportado: "
+            f"{aggression_csv_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error Aggression CSV: "
+            f"{e}"
+        )
+
+    try:
+
+        exportar_agresiones_json(
+            agresiones,
+            aggression_json_output
+        )
+
+        print(
+            f"Aggression JSON exportado: "
+            f"{aggression_json_output}"
+        )
+
+    except Exception as e:
+
+        print(
+            f"Error Aggression JSON: "
             f"{e}"
         )

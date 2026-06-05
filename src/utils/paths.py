@@ -150,3 +150,20 @@ CHASE_CSV_DIR = (
 CHASE_JSON_DIR = (
     CHASE_DIR / "json"
 )
+
+
+# =========================
+# AGGRESSION EVENTS
+# =========================
+
+AGGRESSION_DIR = (
+    OUTPUTS_DIR / "aggression"
+)
+
+AGGRESSION_CSV_DIR = (
+    AGGRESSION_DIR / "csv"
+)
+
+AGGRESSION_JSON_DIR = (
+    AGGRESSION_DIR / "json"
+)

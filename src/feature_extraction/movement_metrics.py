@@ -133,3 +133,18 @@ def calcular_vector_hacia_objetivo(
         destino[1] - origen[1]
 
     )
+
+def calcular_velocidad_historial(
+    historial,
+    fps,
+    ventana=2
+):
+
+    if len(historial) < ventana:
+        return None
+
+    return calcular_velocidad(
+        historial[-ventana],
+        historial[-1],
+        fps
+    )
