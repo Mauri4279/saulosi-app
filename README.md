@@ -1,139 +1,130 @@
 # 🐠 Saulosi App
 
-## Descripción
+> Sistema experimental de **Visión por Computadora e Inteligencia Artificial** para el análisis automatizado del comportamiento de peces ornamentales mediante detección, tracking multiobjeto y extracción de métricas etológicas.
 
-Saulosi App es un sistema experimental de Inteligencia Artificial y Visión por Computadora orientado al monitoreo inteligente de ecosistemas acuáticos domésticos mediante análisis automatizado de video.
-
-El proyecto utiliza técnicas de Deep Learning, tracking multiobjeto y análisis comportamental para interpretar patrones de movimiento en peces ornamentales dentro de acuarios. A partir de esta información, el sistema busca detectar anomalías o posibles incidencias de forma temprana, generando métricas y futuras recomendaciones orientativas para el usuario.
-
-La propuesta combina conceptos de:
-
-- Machine Learning
-- Deep Learning
-- Visión por Computadora
-- Análisis temporal
-- Ciencia de Datos
-- Ingeniería de Software
-
-El sistema fue concebido bajo una arquitectura modular y escalable, permitiendo evolucionar progresivamente desde un prototipo académico hacia una solución más robusta y extensible.
+Saulosi transforma secuencias de video en información estructurada, permitiendo analizar comportamientos e interacciones sociales con el objetivo de contribuir al bienestar animal y brindar una herramienta de apoyo para la investigación.
 
 ---
 
-# 🎯 Objetivo del proyecto
+# ✨ Características
 
-El objetivo principal de Saulosi App es desarrollar un sistema capaz de analizar automáticamente el comportamiento de peces mediante secuencias de video, permitiendo detectar patrones asociados a posibles alteraciones dentro del ecosistema acuático.
-
-Entre los comportamientos de interés se incluyen:
-
-- cambios bruscos de actividad
-- competencia por alimento
-- agresividad
-- territorialidad
-- aislamiento
-- estrés
-- anomalías de movimiento
-
-El proyecto busca validar la viabilidad de utilizar técnicas modernas de visión por computadora y aprendizaje automático para transformar información visual en indicadores comportamentales cuantificables.
+* Detección automática de peces mediante **YOLOv8**
+* Tracking persistente utilizando **BoT-SORT**
+* Asignación de IDs únicos para cada individuo
+* Visualización mediante Bounding Boxes
+* Extracción de métricas cinéticas y espaciales
+* Análisis de interacciones etológicas
+* Base para futuros modelos de inferencia comportamental
+* Arquitectura modular y escalable
+* Exportación automática de videos procesados y resultados
 
 ---
 
-# 🧠 Arquitectura del sistema
+# 🎯 Objetivo
 
-El sistema se encuentra organizado mediante una arquitectura modular desacoplada, donde cada componente cumple una responsabilidad específica dentro del pipeline general.
+El objetivo de Saulosi es desarrollar un sistema capaz de interpretar automáticamente el comportamiento de peces ornamentales mediante técnicas modernas de Visión por Computadora e Inteligencia Artificial.
 
-La arquitectura lógica se divide en:
+A partir de secuencias de video, el sistema genera información estructurada que permitirá detectar patrones asociados a:
 
-- módulo de entrada de datos
-- módulo de procesamiento de video
-- módulo de detección
-- módulo de tracking
-- módulo de extracción de features
-- módulo de inferencia
-- módulo de visualización
+* actividad y movimiento
+* territorialidad
+* competencia por alimento
+* agresividad
+* aislamiento
+* estrés
+* anomalías comportamentales
+
+La propuesta busca validar la utilización de modelos de Deep Learning para convertir información visual en indicadores cuantificables de comportamiento animal.
+
+---
+
+# 🏛 Arquitectura
+
+El sistema fue diseñado siguiendo una arquitectura modular desacoplada, permitiendo la evolución independiente de cada componente del pipeline.
+
+```text
+Entrada de video
+        │
+        ▼
+Preprocesamiento
+        │
+        ▼
+Detección (YOLOv8)
+        │
+        ▼
+Tracking (BoT-SORT)
+        │
+        ▼
+Extracción de métricas
+        │
+        ▼
+Motor de inferencia
+        │
+        ▼
+Visualización y exportación
+```
 
 Este enfoque favorece:
 
-- mantenibilidad
-- reutilización de componentes
-- escalabilidad
-- depuración del sistema
-- evolución independiente de módulos
+* mantenibilidad
+* reutilización de componentes
+* escalabilidad
+* facilidad de testing
+* evolución progresiva del sistema
 
 ---
 
-# ⚙️ Pipeline de procesamiento
+# ⚙️ Pipeline implementado
 
-El flujo principal del sistema sigue la siguiente secuencia:
+Actualmente Saulosi es capaz de realizar:
 
-```text
-captura de video
-        ↓
-preprocesamiento
-        ↓
-detección de peces
-        ↓
-tracking multiobjeto
-        ↓
-extracción de features
-        ↓
-inferencia
-        ↓
-visualización de resultados
-```
-
-Actualmente el sistema implementa:
-
-- lectura y procesamiento de video mediante OpenCV
-- normalización y redimensionamiento de frames
-- detección mediante YOLOv8
-- tracking persistente utilizando BoT-SORT
-- asignación de IDs únicos
-- generación de trayectorias históricas
-- overlays visuales y métricas en tiempo real
-- exportación automática de video procesado
+* lectura y procesamiento de video mediante OpenCV
+* normalización de frames
+* detección automática de peces
+* tracking multiobjeto con IDs persistentes
+* generación de trayectorias históricas
+* overlays visuales en tiempo real
+* extracción de métricas comportamentales
+* exportación automática de resultados
 
 ---
 
-# 🛠 Tecnologías utilizadas
+# 🛠 Tecnologías
 
-## Lenguaje principal
+## Lenguaje
 
-- Python
+* Python
 
-## Procesamiento de video e imágenes
+## Visión por Computadora
 
-- OpenCV
-- FFmpeg
-- NumPy
-
-## Detección de objetos
-
-- Ultralytics YOLOv8
-- Roboflow
+* OpenCV
+* Ultralytics YOLOv8
+* FFmpeg
 
 ## Tracking
 
-- BoT-SORT
-- ByteTrack (etapas iniciales)
+* BoT-SORT
+* ByteTrack (implementación inicial)
 
-## Ciencia de datos y Machine Learning
+## Ciencia de Datos
 
-- Pandas
-- Scikit-learn
+* NumPy
+* Pandas
+* Scikit-learn
 
-## Desarrollo y gestión
+## Desarrollo
 
-- Git
-- GitHub
+* Git
+* GitHub
 
-## Tecnologías futuras contempladas
+## Tecnologías contempladas para futuras versiones
 
-- Streamlit
-- PyTorch
-- TensorFlow
-- Docker
-- SQLite / PostgreSQL
-- Integración IoT
+* PyTorch
+* TensorFlow
+* Streamlit
+* Docker
+* SQLite / PostgreSQL
+* Integración IoT
 
 ---
 
@@ -146,11 +137,8 @@ SAULOSI_APP/
 │   ├── raw/
 │   │   ├── videos/
 │   │   └── annotations/
-│   │
 │   ├── processed/
-│   │
 │   └── datasets/
-│       └── inference/
 │
 ├── models/
 │   └── detection/
@@ -166,7 +154,6 @@ SAULOSI_APP/
 │   ├── input/
 │   ├── preprocessing/
 │   ├── tracking/
-│   │   └── botsort/
 │   ├── utils/
 │   └── visualization/
 │
@@ -177,228 +164,140 @@ SAULOSI_APP/
 
 ---
 
-# 📌 Estado actual
+# 🚀 Instalación
 
-## Fases completadas parcialmente
-
-### Fase 1 — Definición y preparación del proyecto
-
-- Definición conceptual del sistema
-- Diseño inicial de arquitectura modular
-- Investigación sobre visión por computadora y comportamiento de peces
-- Planificación general del pipeline
-
-### Fase 2 — Recolección y construcción del dataset
-
-- Recolección colaborativa de videos
-- Estandarización de formatos
-- Convención estructurada de nombres
-- Organización inicial del dataset
-
-### Fase 3 — Preprocesamiento y exploración
-
-- Extracción y procesamiento de frames
-- Normalización de resolución
-- Limpieza de datos visuales
-- Exploración inicial del dataset
-
-### Fase 4 — Detección de objetos
-
-- Etiquetado manual mediante Roboflow
-- Entrenamiento personalizado de YOLOv8
-- Aplicación de Transfer Learning
-- Implementación de Data Augmentation
-- Evaluación de métricas de detección
-
-### Fase 5 — Tracking
-
-- Integración inicial con ByteTrack
-- Migración y optimización mediante BoT-SORT
-- Reducción significativa de ID Switching
-- Implementación de trayectorias persistentes
-- Visualización de estelas históricas
-
----
-
-# 🚀 Próximos pasos
-
-Las siguientes etapas del proyecto contemplan:
-
-### Fase 6 — Extracción de features
-
-- cálculo de velocidad
-- aceleración
-- permanencia espacial
-- interacción entre individuos
-- métricas temporales
-
-### Fase 7 — Modelado e inferencia
-
-- detección de anomalías
-- clasificación comportamental
-- modelos predictivos
-- análisis temporal avanzado
-
-### Fase 8 — Desarrollo de interfaz
-
-- dashboard interactivo
-- visualización de métricas
-- carga de videos
-- recomendaciones automáticas
-
-### Fase 9 — Evaluación integral
-
-- validación de extremo a extremo
-- optimización de rendimiento
-- análisis de robustez
-- mejora de experiencia de usuario
-
-### Fase 10 — Documentación y presentación
-
-- documentación técnica final
-- diagramas y métricas
-- presentación académica
-- preparación de defensa
-
----
-
-# ▶️ Instalación
-
-## Clonar el repositorio
+## 1. Clonar el repositorio
 
 ```bash
-git clone <https://github.com/Mauri4279/saulosi-app>
+git clone https://github.com/Mauri4279/saulosi-app.git
+
 cd saulosi-app
 ```
 
-## Crear entorno virtual
+---
 
-```bash
-python -m venv venv
-```
-
-## Activar entorno virtual
+## 2. Crear un entorno virtual (recomendado)
 
 ### Windows
 
 ```bash
+python -m venv venv
+
 venv\Scripts\activate
 ```
 
 ### Linux / macOS
 
 ```bash
+python3 -m venv venv
+
 source venv/bin/activate
 ```
 
-## Instalar dependencias
+---
+
+## 3. Instalar dependencias
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Descargar modelo entrenado
+---
 
-El archivo `best.pt` no se incluye en el repositorio debido a limitaciones de tamaño.
+## 4. Descargar el modelo entrenado
+
+Debido al tamaño del archivo, el modelo entrenado (`best.pt`) no forma parte del repositorio.
 
 Descargar manualmente desde:
 
 [https://drive.google.com/drive/folders/10z-bkLrm8DFoyQT_GRFfOYyyK0RU_NWj?usp=sharing]
 
-Luego colocar el archivo en:
+Una vez descargado, ubicarlo en:
 
-models/detection/trained/
+```text
+models/
+└── detection/
+    └── trained/
+        └── best.pt
+```
 
 ---
 
-# ▶️ Uso
+## 5. Agregar videos
 
-Colocar los videos dentro de:
+Colocar los videos a procesar dentro de:
 
 ```text
-data/raw/videos/
+data/
+└── raw/
+    └── videos/
 ```
 
-Ejecutar el sistema:
+---
+
+## 6. Ejecutar la aplicación
 
 ```bash
 python main.py
 ```
 
-Los resultados procesados serán exportados automáticamente dentro de:
+---
 
-```text
-data/processed/
-```
+## 7. Resultados
+
+Los videos procesados y las métricas generadas serán exportados automáticamente dentro de la carpeta /outputs
+
+# 🔬 Roadmap
+
+## ✅ Implementado
+
+* Detección mediante YOLOv8
+* Tracking multiobjeto con BoT-SORT
+* IDs persistentes
+* Bounding Boxes
+* Trayectorias históricas
+* Extracción de métricas comportamentales
+* Exportación automática de resultados
+
+## 🚧 En desarrollo
+
+* Motor de inferencia basado en métricas
+* Clasificación automática de comportamientos
+* Detección de anomalías
+
+## ⏳ Próximas funcionalidades
+
+* Dashboard interactivo
+* Visualización estadística
+* Reportes automáticos
+* Recomendaciones orientadas al bienestar animal
+* Integración con dispositivos IoT
 
 ---
 
-# 🛣 Roadmap
+# 👥 Autores
 
-## Fase 1 — Definición y preparación
-- objetivos y alcance
-- arquitectura del sistema
-- investigación conceptual
-
-## Fase 2 — Dataset
-- recopilación colaborativa
-- organización y estandarización
-- etiquetado inicial
-
-## Fase 3 — Preprocesamiento
-- extracción de frames
-- limpieza de datos
-- exploración visual
-
-## Fase 4 — Detección
-- entrenamiento YOLOv8
-- validación
-- optimización inicial
-
-## Fase 5 — Tracking
-- seguimiento multiobjeto
-- reducción de ID Switching
-- trayectorias persistentes
-
-## Fase 6 — Features
-- velocidad
-- aceleración
-- proximidad
-- permanencia espacial
-
-## Fase 7 — Inferencia
-- detección de anomalías
-- análisis comportamental
-- modelos predictivos
-
-## Fase 8 — Interfaz
-- Streamlit
-- dashboard visual
-- recomendaciones
-
-## Fase 9 — Evaluación
-- testing integral
-- validación técnica
-- optimización
-
-## Fase 10 — Presentación final
-- documentación
-- defensa académica
-- resultados y conclusiones
+* Guido Di Iorio
+* Mariela Flores
+* Mauricio Ruiz
 
 ---
 
-# 👨‍💻 Autores
+# 📚 Áreas de aplicación
 
-Guido Di Iorio
-Mariela Flores
-Mauricio Ruiz 
+* Inteligencia Artificial
+* Visión por Computadora
+* Deep Learning
+* Machine Learning
+* Ciencia de Datos
+* Sistemas Inteligentes
+* Análisis automatizado de comportamiento animal
 
-Proyecto académico y experimental enfocado en:
+---
 
-- Inteligencia Artificial
-- Visión por Computadora
-- Ciencia de Datos
-- Machine Learning
-- Sistemas inteligentes
-- Análisis automatizado de comportamiento animal
+# ⭐ Proyecto
+
+Saulosi es un proyecto académico y experimental desarrollado con el objetivo de explorar la aplicación de técnicas modernas de Inteligencia Artificial al análisis comportamental de peces ornamentales.
+
+Su diseño modular permite continuar incorporando nuevos algoritmos, métricas y modelos de inferencia, evolucionando progresivamente hacia una plataforma integral de análisis para investigación y apoyo al bienestar animal.
+
